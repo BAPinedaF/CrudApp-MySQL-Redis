@@ -25,9 +25,13 @@ class MicroServicioMySqlRedisApplicationTests {
     CustomerService customerService;
  
     @Test
-    public void test() {
-    	int sizeCustomers = customerService.findAllCustomers().size();
+    public void validateAllCustumersSQL() {
         assertEquals(3, customerService.findAllCustomers().size());
+    }
+    
+    @Test
+    public void validateAllCustumersRedis() {
+    	assertEquals(0, customerService.findAllRedis().size());
     }
     
     
