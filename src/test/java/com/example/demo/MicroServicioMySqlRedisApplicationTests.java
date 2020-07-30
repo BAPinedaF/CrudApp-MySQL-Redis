@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
@@ -28,7 +27,7 @@ class MicroServicioMySqlRedisApplicationTests {
     @Test
     public void test() {
     	int sizeCustomers = customerService.findAllCustomers().size();
-        assertEquals(2, customerService.findAllCustomers().size());
+        assertEquals(3, customerService.findAllCustomers().size());
     }
     
     
