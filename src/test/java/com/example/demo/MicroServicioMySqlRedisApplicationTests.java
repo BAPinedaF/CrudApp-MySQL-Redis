@@ -25,5 +25,7 @@ class MicroServicioMySqlRedisApplicationTests {
     public void test() {
         assertEquals(2, customerService.findAllCustomers().size());
     }
+    
+    
 
 }
