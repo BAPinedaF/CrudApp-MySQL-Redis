@@ -20,7 +20,7 @@ public interface CustomerService {
 
 	public String updateCustomer(Customer customerNew);
 
-	public Map<String, Customer> findAllRedis();
+	public List<Customer> findAllRedis();
 
 	public Customer findByIdRedis(String id);
 

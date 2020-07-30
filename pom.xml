@@ -91,6 +91,11 @@
 		    <artifactId>hibernate-c3p0</artifactId>
 		    <version>5.4.18.Final</version>
 		</dependency>
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		    <version>3.3.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

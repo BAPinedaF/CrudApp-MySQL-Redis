@@ -1,15 +1,22 @@
 package com.example.demo.serviceimpl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Jedis;
+import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -30,14 +37,17 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	CustomerRepository customerRepository;
 	
-	@Scheduled(fixedRate = 600000)
+	/*@Scheduled(fixedRate = 600000)
     public void tarea3() {
 		deleteRedis();
         System.out.println("Tarea de eliminación de REDIS ejecutada cada 10 minutos");
-    }
+    }*/
+
+    private long eventsLifeTime = 10;
 
 	private static final String KEY = "Customer";
 
+	@Autowired
 	private RedisTemplate<String, Customer> redisTemplate;
 	private HashOperations<String, String, Customer> hashOperations;
 
@@ -50,19 +60,49 @@ public class CustomerServiceImpl implements CustomerService {
 		hashOperations = redisTemplate.opsForHash();
 	}
 
+	//@Override
+	//public Map<String, Customer> findAllRedis() {
 	@Override
-	public Map<String, Customer> findAllRedis() {
-		return hashOperations.entries(KEY);
+	public List<Customer> findAllRedis() {
+		//hashOperations.entries(KEY)
+		Set<String> keys = redisTemplate.keys("customer#*");
+		List<Customer> customerList = new ArrayList<Customer>();
+		for (String key : keys) {
+			customerList.add(redisTemplate.opsForValue().get(key));
+		}
+		Collections.reverse(customerList);
+		//Customer customernew2 = redisTemplate.opsForValue().get("customer#2");
+		//return hashOperations.entries(KEY);
+		return customerList;
 	}
 
 	@Override
 	public Customer findByIdRedis(String id) {
 		return (Customer) hashOperations.get(KEY, id);
 	}
+	
+	public void save(Customer customerNew) {
+		final String key = String.format("user:%s",customerNew.getId());
+		redisTemplate.opsForValue().set(key,customerNew);
+		redisTemplate.expire(key, 10, TimeUnit.SECONDS );
+        /*String key = buildKey(fixtureId, customerNew.getId());
+        BoundValueOperations<String, Customer> boundValueOperations = redisTemplate.boundValueOps(key);
+        boundValueOperations.set(customerNew);
+        boundValueOperations.expire(10, TimeUnit.SECONDS);*/
+    }
+	
+	/*private String buildKey(Integer fixtureId, Long customerId) {
+        return "customer:" + fixtureId + ":" + customerId;
+    }*/
 
 	@Override
 	public void saveRedis(Customer customerNew) {
-		hashOperations.put(KEY, UUID.randomUUID().toString(), customerNew);
+		//Sobrecarga de metodos y tiemp ode vida
+		//hashOperations.put(KEY, UUID.randomUUID().toString(), customerNew);
+		
+		//final String key = String.format("user:%s",customerNew.getId());
+		redisTemplate.opsForValue().set("customer#" + customerNew.getId(),customerNew);
+		redisTemplate.expire("customer#" + customerNew.getId(), eventsLifeTime, TimeUnit.MINUTES );
 	}
 
 	@Override
@@ -102,6 +142,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public String updateCustomer(Customer customerUpdated) {
 		Long num = customerUpdated.getId();
+		
 		if (customerRepository.findById(num).isPresent()) {
 			Customer customerToUpdate = new Customer();
 			customerToUpdate.setId(customerUpdated.getId());
@@ -116,14 +157,15 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public List<Customer> searchAllCustomers() throws JsonProcessingException {
 		// Validar si REDIS posee informacion
-		if (findAllRedis().toString().equals("{}")) {
+		String astring = findAllRedis().toString();
+		if (astring.equals("[]")) {
 			System.out.println("-----------------------------------SQL-----------------------------------");
 			// Insertar los valores de la funcion de JPA de findAll en una lista
 			refreshRedisData(findAllCustomers());
 			return findAllCustomers();
 		} else {
 			System.out.println("----------------------------------REDIS----------------------------------");
-			
+			/*
 			// Creacion de un string plano para guardar el Map que trabaja por defecto REDIS
 			// en un json,
 			// se realiza para garantizar que la informacion enviada al back es la misma de
@@ -150,7 +192,9 @@ public class CustomerServiceImpl implements CustomerService {
 			// Sort de la lista de Customers puesto que los datos recuperados de REDIS
 			// vienen en desorden
 			customerList.sort(Comparator.comparing(Customer::getId));
-			return customerList;
+			
+			*/
+			return findAllRedis();
 		}
 	}
 
