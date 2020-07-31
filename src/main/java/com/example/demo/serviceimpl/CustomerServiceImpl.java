@@ -80,20 +80,6 @@ public class CustomerServiceImpl implements CustomerService {
 	public Customer findByIdRedis(String id) {
 		return (Customer) hashOperations.get(KEY, id);
 	}
-	
-	public void save(Customer customerNew) {
-		final String key = String.format("user:%s",customerNew.getId());
-		redisTemplate.opsForValue().set(key,customerNew);
-		redisTemplate.expire(key, 10, TimeUnit.SECONDS );
-        /*String key = buildKey(fixtureId, customerNew.getId());
-        BoundValueOperations<String, Customer> boundValueOperations = redisTemplate.boundValueOps(key);
-        boundValueOperations.set(customerNew);
-        boundValueOperations.expire(10, TimeUnit.SECONDS);*/
-    }
-	
-	/*private String buildKey(Integer fixtureId, Long customerId) {
-        return "customer:" + fixtureId + ":" + customerId;
-    }*/
 
 	@Override
 	public void saveRedis(Customer customerNew) {

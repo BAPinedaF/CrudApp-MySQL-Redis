@@ -11,6 +11,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import com.example.demo.entities.Customer;
 import com.example.demo.service.CustomerService;
 
 @SpringBootTest
@@ -29,9 +30,21 @@ class MicroServicioMySqlRedisApplicationTests {
         assertEquals(3, customerService.findAllCustomers().size());
     }
     
-    @Test
+    /*@Test
     public void validateAllCustumersRedis() {
     	assertEquals(0, customerService.findAllRedis().size());
+    }*/
+    
+    @Test
+    public void validateNewCustomer() {
+    	Customer customerNew = new Customer();
+    	customerNew.setId((long) 4);
+    	customerNew.setName("Jason");
+    	customerNew.setLastname("Todd");
+    	customerNew.setPhone("3333333");
+    	Customer customerSaved = new Customer();
+    	customerSaved = customerService.saveCustomer(customerNew);
+    	assertEquals(4, customerSaved.getId());
     }
     
     
