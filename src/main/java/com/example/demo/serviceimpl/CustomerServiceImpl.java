@@ -120,9 +120,9 @@ public class CustomerServiceImpl implements CustomerService {
 		deleteRedis();
 		if (customerRepository.findById(id).isPresent()) {
 			customerRepository.deleteById(id);
-			return "{ \"status\": \"200\" }";
+			return "Eliminado con exito";
 		}
-		return "{ \"status\": \"404\" }";
+		return "El usuario con el id " + id  + " no existe y no se puede eliminar";
 	}
 
 	@Override
