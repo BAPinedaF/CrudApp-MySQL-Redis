@@ -11,9 +11,11 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.entities.Customer;
 
+@Service
 public class CustomerServiceRedis {
 	private long eventsLifeTime = 10;
 

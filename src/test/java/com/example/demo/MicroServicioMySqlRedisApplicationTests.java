@@ -66,7 +66,6 @@ class MicroServicioMySqlRedisApplicationTests {
     	editCustomer.setLastname("Todd");
     	editCustomer.setPhone("3333333");
     	assertEquals("Customer modificado", customerService.updateCustomer(editCustomer));
-    	//customerEdited = customerService.updateCustomer(customerNew);
     }
     
     

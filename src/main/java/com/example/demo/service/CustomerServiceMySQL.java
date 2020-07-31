@@ -43,7 +43,7 @@ public class CustomerServiceMySQL {
 	}
 
 	public String deleteCustomer(Long id) {
-		customerServiceRedis.deleteRedis();
+		//customerServiceRedis.deleteRedis();
 		if (customerRepository.findById(id).isPresent()) {
 			customerRepository.deleteById(id);
 			return "Eliminado con exito";
