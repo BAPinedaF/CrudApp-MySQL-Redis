@@ -50,18 +50,17 @@ class MicroServicioMySqlRedisApplicationTests {
     
     @Test
     public void validateDeleteOfCustomer() {
-    	assertEquals("Eliminado con exito", customerService.deleteCustomer((long) 1));
+    	assertEquals("Eliminado con exito", customerService.deleteCustomer(2L));
     }
     
     @Test
     public void validateEditCustomer() {
     	Customer editCustomer = new Customer();
-    	editCustomer.setId((long) 1);
+    	editCustomer.setId(1L);
     	editCustomer.setName("Jason");
     	editCustomer.setLastname("Todd");
     	editCustomer.setPhone("3333333");
-    	Customer customerEdited = new Customer();
-    	assertEquals("Customer modificado", customerService.updateCustomer(customerEdited));
+    	assertEquals("Customer modificado", customerService.updateCustomer(editCustomer));
     	//customerEdited = customerService.updateCustomer(customerNew);
     }
     
