@@ -2,6 +2,9 @@ package com.example.demo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.example.demo.entities.Customer;
-import com.example.demo.service.CustomerService;
+import com.example.demo.service.CustomerServiceMySQL;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -23,11 +26,13 @@ class MicroServicioMySqlRedisApplicationTests {
 	
 	
 	@Autowired
-    CustomerService customerService;
+    CustomerServiceMySQL customerService;
  
     @Test
     public void validateAllCustumersSQL() {
-        assertEquals(3, customerService.findAllCustomers().size());
+    	List<Customer> customerList = new ArrayList<Customer>();
+    	customerList = customerService.findAllCustomers();
+        assertEquals(3, customerList.size());
     }
     
     /*@Test
@@ -50,7 +55,7 @@ class MicroServicioMySqlRedisApplicationTests {
     
     @Test
     public void validateDeleteOfCustomer() {
-    	assertEquals("Eliminado con exito", customerService.deleteCustomer(2L));
+    	assertEquals("Eliminado con exito", customerService.deleteCustomer(7L));
     }
     
     @Test

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.controllers.CustomerController;
 import com.example.demo.entities.Customer;
-import com.example.demo.service.CustomerService;
+import com.example.demo.service.CustomerServiceMySQL;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 @SpringBootApplication
@@ -25,7 +25,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 public class CustomerControllerImpl implements CustomerController {
 	
 	@Autowired
-	CustomerService customerService;
+	CustomerServiceMySQL customerService;
 	
 	// http://localhost:8888/customers (GET)
 	@Override
