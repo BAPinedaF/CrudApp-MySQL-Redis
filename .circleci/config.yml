@@ -6,11 +6,11 @@ orbs:
 jobs:
   test-ejecutar-redis:
     docker:
-      - image: redis
+      - image: redis:3.2
     steps:
       - run:
           name: Wait for Redis to receive connections
-          command: dockerize -wait tcp://0.0.0.0:6379 -timeout 1m
+          command: dockerize -wait tcp://localhost:6379 -timeout 1m
 
 workflows:
   maven_test:
