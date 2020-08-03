@@ -7,7 +7,7 @@ orbs:
 jobs:
   test-ejecutar-redis:
     docker:
-      - image: redis:3.2
+      - image: redis@sha256:54057dd7e125ca41afe526a877e8bd35ec2cdd33b9217e022ed37bdcf7d09673
     steps:
       - checkout
       - run:
