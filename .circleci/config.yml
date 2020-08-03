@@ -10,9 +10,10 @@ jobs:
     steps:
       - run:
           name: Wait for Redis to receive connections
-          command: dockerize -wait tcp://192.168.99.100:6379 -timeout 1m
+          command: dockerize -wait tcp://localhost:6379 -timeout 1m
 
 workflows:
   maven_test:
     jobs:
+      - test-ejecutar-redis
       - maven/test # checkout, build, test, and upload test results
