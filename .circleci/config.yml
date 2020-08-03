@@ -21,7 +21,7 @@ jobs:
       
       - run:
             name: Wait for Redis
-            command: dockerize -wait http://localhost:6379 -timeout 2m
+            command: dockerize -wait tcp://localhost:6379 -timeout 1m
 
 workflows:
   maven_test:
