@@ -12,11 +12,8 @@ dependencies:
   cache_directories:
     - redis-3.2.0
 
-test:
-  pre:
-    - sudo service redis-server --port 6391 start
-
 workflows:
   maven_test:
     jobs:
+      - sudo service redis-server --port 6391 start
       - maven/test # checkout, build, test, and upload test results
