@@ -12,7 +12,7 @@ jobs:
       - run:
             name: Dockerize v0.6.0
             command: |
-               sudo port install wget
+               brew install wget
                wget [removedhttp-new-user]jwilder/dockerize/releases/download/v0.6.0/dockerize-linux-amd64-v0.6.0.tar.gz
                sudo rm -rf /usr/local/bin/dockerize
                sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-v0.6.0.tar.gz
