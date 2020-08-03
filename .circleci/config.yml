@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   maven: circleci/maven@0.0.12
+  wait-for: cobli/wait-for@0.0.2
   
 jobs:
   test-ejecutar-redis:
