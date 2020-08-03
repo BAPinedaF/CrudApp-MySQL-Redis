@@ -10,8 +10,11 @@ jobs:
     steps:
       - checkout
       - run:
+            name: App get Update
+            command: apt-get update
+      - run:
             name: Install wget
-            command: apt-get install wget
+            command: apt-get -y install wget
       - run:
             name: Dockerize v0.6.0
             command: wget [removedhttp-new-user]jwilder/dockerize/releases/download/v0.6.0/dockerize-linux-amd64-v0.6.0.tar.gz
