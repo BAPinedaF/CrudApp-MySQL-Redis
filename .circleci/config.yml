@@ -17,5 +17,5 @@ jobs:
 workflows:
   maven_test:
     jobs:
-      - test-ejecutar-redis
+      - build
       - maven/test # checkout, build, test, and upload test results
