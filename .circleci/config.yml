@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   maven: circleci/maven@0.0.12
-  wait-for: cobli/wait-for@0.0.2
   
 jobs:
   test-ejecutar-redis:
@@ -10,10 +9,6 @@ jobs:
       - image: redis:3.2
     steps:
       - checkout
-      - wait-for/redis
-      - run:
-          name: Test
-          command: sbt test
 
 workflows:
   maven_test:
