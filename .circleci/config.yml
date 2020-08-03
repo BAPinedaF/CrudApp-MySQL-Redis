@@ -3,26 +3,16 @@ version: 2.1
 orbs:
   maven: circleci/maven@0.0.12
   
-
 jobs:
-  test-ejecutar-redis:
+  build:
     docker:
-      - image: redis
+      - image: ubuntu:14.04
+      - image: redis:2.8.19
+    working_directory: /project
     steps:
-      - checkout
-      - run:
-            name: App get Update
-            command: apt-get update
-      - run:
-            name: Install wget
-            command: apt-get -y install wget
-      - run:
-            name: Dockerize v0.6.0
-            command: wget https://github.com/jwilder/dockerize/releases/download/v0.6.0/dockerize-linux-amd64-v0.6.0.tar.gz && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-v0.6.0.tar.gz && rm dockerize-linux-amd64-v0.6.0.tar.gz
-      
-      - run:
-            name: Wait for Redis
-            command: dockerize -wait tcp://localhost:6379 -timeout 2m
+      - run: |
+          apt-get update && apt-get install -y redis-tools
+          echo "CONFIG SET save ''" | redis-cli -x
 
 workflows:
   maven_test:
