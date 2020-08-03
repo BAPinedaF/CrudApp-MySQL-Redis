@@ -7,6 +7,12 @@ jobs:
   test-ejecutar-redis:
     docker:
       - image: redis:3.2
+    steps:
+      - checkout
+      - wait-for/redis
+      - run:
+          name: Test
+          command: sbt test
 
 workflows:
   maven_test:
