@@ -10,11 +10,12 @@ jobs:
           name: install dependencies
           command: |
             echo "hola mundo"
-            mvn install -Dmaven.test.skip=true
+            chmod u+x mvnw
+            ./mvnw install -Dmaven.test.skip=true
       - run: 
           name: testing
           command: |
-            mvn test
+            ./mvnw test
 
 
 workflows:
