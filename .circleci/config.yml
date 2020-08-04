@@ -7,14 +7,14 @@ jobs:
     working_directory: /project
     steps:
       - run: 
-        name: install dependencies
-        command: |
-          echo "hola mundo"
-          mvn install -Dmaven.test.skip=true
+          name: install dependencies
+          command: |
+            echo "hola mundo"
+            mvn install -Dmaven.test.skip=true
       - run: 
-        name: testing
-        command: |
-          mvn test
+          name: testing
+          command: |
+            mvn test
 
 
 workflows:
