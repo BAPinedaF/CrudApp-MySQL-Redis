@@ -2,9 +2,11 @@ javaclient:
     image: maven:3.6.3-openjdk-11
     command: java JavaRedisApp
     links:
-     - redis
+     - "redis"
     volumes:
        - .:/app
     working_dir: /app
 redis:
     image: redis
+    ports:
+       – "6379:6379"
