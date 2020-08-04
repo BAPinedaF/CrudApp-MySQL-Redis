@@ -6,8 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: ubuntu:14.04
-      - image: redis:2.8.19
+      - image: redis
     working_directory: /project
     steps:
       - run: |
