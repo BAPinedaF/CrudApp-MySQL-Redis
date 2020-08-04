@@ -4,8 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +25,7 @@ import com.example.demo.service.CustomerServiceMySQL;
 @ExtendWith(SpringExtension.class)
 @TestPropertySource(locations = "classpath:db-test.properties")
 @Sql("/test-mysql.sql")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @CrossOrigin
 class MicroServicioMySqlRedisApplicationTests {
 	
@@ -28,8 +33,9 @@ class MicroServicioMySqlRedisApplicationTests {
 	@Autowired
     CustomerServiceMySQL customerService;
  
-    @Test
-    public void validateAllCustumersSQL() {
+   @Test
+    @Order(1)
+    void validateAllCustumersSQL() {
     	List<Customer> customerList = new ArrayList<Customer>();
     	customerList = customerService.findAllCustomers();
         assertEquals(3, customerList.size());
@@ -39,9 +45,20 @@ class MicroServicioMySqlRedisApplicationTests {
     public void validateAllCustumersRedis() {
     	assertEquals(0, customerService.findAllRedis().size());
     }*/
+   
+   @Test
+   void validateSearchCustomer() {
+	   Customer customer = new Customer();
+	   Optional<Customer> customerFound = Optional.of(customer);
+	   customerFound = customerService.findCustomerById(2L);
+	   customer = customerFound.get();
+	   assertEquals("Diana", customer.getName());
+	   assertEquals("Prince", customer.getLastname());
+	   assertEquals("1111111", customer.getPhone());
+   }
     
     @Test
-    public void validateNewCustomer() {
+    void validateNewCustomer() {
     	Customer customerNew = new Customer();
     	customerNew.setName("Jason");
     	customerNew.setLastname("Todd");
@@ -54,12 +71,7 @@ class MicroServicioMySqlRedisApplicationTests {
     }
     
     @Test
-    public void validateDeleteOfCustomer() {
-    	assertEquals("Eliminado con exito", customerService.deleteCustomer(7L));
-    }
-    
-    @Test
-    public void validateEditCustomer() {
+    void validateEditCustomer() {
     	Customer editCustomer = new Customer();
     	editCustomer.setId(1L);
     	editCustomer.setName("Jason");
@@ -68,6 +80,10 @@ class MicroServicioMySqlRedisApplicationTests {
     	assertEquals("Customer modificado", customerService.updateCustomer(editCustomer));
     }
     
+    @Test
+    void validateDeleteOfCustomer() {
+    	assertEquals("Eliminado con exito", customerService.deleteCustomer(3L));
+    }
     
 
 }

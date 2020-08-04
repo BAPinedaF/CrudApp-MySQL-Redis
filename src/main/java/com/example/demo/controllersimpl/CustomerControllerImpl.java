@@ -59,7 +59,7 @@ public class CustomerControllerImpl implements CustomerController {
 	// http://localhost:8888/customers/update (PATCH)
 	@Override
 	@RequestMapping(value = "/customers/update", method = RequestMethod.PATCH, produces = "application/json")
-	public String updateCustomer(Customer customerNew) {
+	public String updateCustomer(@RequestBody Customer customerNew) {
 		return customerService.updateCustomer(customerNew);
 	}
 }

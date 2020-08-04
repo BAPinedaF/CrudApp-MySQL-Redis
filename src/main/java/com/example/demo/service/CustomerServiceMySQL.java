@@ -58,6 +58,7 @@ public class CustomerServiceMySQL {
 			Customer customerToUpdate = new Customer();
 			customerToUpdate.setId(customerUpdated.getId());
 			customerToUpdate.setName(customerUpdated.getName());
+			customerToUpdate.setLastname(customerUpdated.getLastname());
 			customerToUpdate.setPhone(customerUpdated.getPhone());
 			customerRepository.save(customerToUpdate);
 			return "Customer modificado";
