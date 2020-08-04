@@ -5,6 +5,7 @@ javaclient:
       - redis
     volumes:
       - .:/app
+      - .m2:/root/.m2
     working_dir: /app
 redis:
     image: redis:3.2

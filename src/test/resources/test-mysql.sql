@@ -9,10 +9,10 @@ CREATE TABLE IF NOT EXISTS CUSTOMERS(
 
 TRUNCATE TABLE CUSTOMERS;
 
-INSERT INTO CUSTOMERS (NAME, LASTNAME, PHONE) VALUES 
-('Bruce', 'Wayne', '666666'),
-('Diana', 'Prince', '1111111'),
-('Clark', 'Kent', '5555555');
+INSERT INTO CUSTOMERS (ID, NAME, LASTNAME, PHONE) VALUES
+('1', 'Bruce', 'Wayne', '666666'),
+('2', 'Diana', 'Prince', '1111111'),
+('3', 'Clark', 'Kent', '5555555');
 
 
 

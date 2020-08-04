@@ -18,6 +18,7 @@ jobs:
           name: install dependencies and exec tests
           command: |
             echo "hola mundo"
+            docker-compose up -d
             docker-compose run javaclient mvn install
 
 workflows:

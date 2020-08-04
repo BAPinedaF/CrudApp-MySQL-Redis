@@ -33,7 +33,7 @@ class MicroServicioMySqlRedisApplicationTests {
 	@Autowired
     CustomerServiceMySQL customerService;
  
-   @Test
+    @Test
     @Order(1)
     void validateAllCustumersSQL() {
     	List<Customer> customerList = new ArrayList<Customer>();
