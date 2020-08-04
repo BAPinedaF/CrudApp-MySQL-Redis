@@ -23,8 +23,10 @@ public class RedisConfiguration {
         System.out.println("redisConnectionFactory");
         JedisConnectionFactory redisConnectionFactory = new JedisConnectionFactory();
 
-        // Defaults
+        // Git
         redisConnectionFactory.setHostName("redis");
+        // Local
+        //redisConnectionFactory.setHostName("localhost");
         redisConnectionFactory.setPort(6379);
         return redisConnectionFactory;
     }
