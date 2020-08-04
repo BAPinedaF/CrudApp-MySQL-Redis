@@ -1,20 +1,23 @@
 version: 2.1
-
-orbs:
-  maven: circleci/maven@0.0.12
   
 jobs:
-  build:
+  build_and_test:
     docker:
-      - image: redis
+      - image: mouserd/java-redis
     working_directory: /project
     steps:
-      - run: |
-          apt-get update && apt-get install -y redis-tools
-          echo "CONFIG SET save ''" | redis-cli -x
+      - run: 
+        name: install dependencies
+        command: |
+          echo "hola mundo"
+          mvn install -Dmaven.test.skip=true
+      - run: 
+        name: testing
+        command: |
+          mvn test
+
 
 workflows:
   maven_test:
     jobs:
-      - build
-      - maven/test # checkout, build, test, and upload test results
+      - build_and_test
