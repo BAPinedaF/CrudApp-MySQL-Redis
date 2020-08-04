@@ -46,7 +46,7 @@ class MicroServicioMySqlRedisApplicationTests {
     	assertEquals(0, customerService.findAllRedis().size());
     }*/
    
-   @Test
+   /*@Test
    void validateSearchCustomer() {
 	   Customer customer = new Customer();
 	   Optional<Customer> customerFound = Optional.of(customer);
@@ -55,7 +55,7 @@ class MicroServicioMySqlRedisApplicationTests {
 	   assertEquals("Diana", customer.getName());
 	   assertEquals("Prince", customer.getLastname());
 	   assertEquals("1111111", customer.getPhone());
-   }
+   }*/
     
     @Test
     void validateNewCustomer() {
@@ -70,7 +70,7 @@ class MicroServicioMySqlRedisApplicationTests {
     	assertEquals("3333333", customerSaved.getPhone());
     }
     
-    @Test
+    /*@Test
     void validateEditCustomer() {
     	Customer editCustomer = new Customer();
     	editCustomer.setId(1L);
@@ -78,7 +78,7 @@ class MicroServicioMySqlRedisApplicationTests {
     	editCustomer.setLastname("Todd");
     	editCustomer.setPhone("3333333");
     	assertEquals("Customer modificado", customerService.updateCustomer(editCustomer));
-    }
+    }*/
     
     @Test
     void validateDeleteOfCustomer() {
