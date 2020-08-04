@@ -19,11 +19,23 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfiguration {
 	
 	@Bean
-    public RedisTemplate<String, Customer> redisTemplate(RedisConnectionFactory connectionFactory) {
-        RedisTemplate<String, Customer> template = new RedisTemplate<>();
-        template.setConnectionFactory(connectionFactory);
-        // Add some specific configuration here. Key serializers, etc.
-        return template;
+    public JedisConnectionFactory redisConnectionFactory() {
+        System.out.println("redisConnectionFactory");
+        JedisConnectionFactory redisConnectionFactory = new JedisConnectionFactory();
+
+        // Defaults
+        redisConnectionFactory.setHostName("127.0.0.1");
+        redisConnectionFactory.setPort(6379);
+        return redisConnectionFactory;
+    }
+
+    @Bean
+    public RedisTemplate<String, Customer> redisTemplate(RedisConnectionFactory cf) {
+        System.out.println("redisTemplate");
+        RedisTemplate<String, Customer> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(cf);
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        return redisTemplate;
     }
    
 }
