@@ -6,6 +6,7 @@ jobs:
       - image: mouserd/java-redis:v2
     working_directory: /project
     steps:
+      - checkout
       - run: 
           name: install dependencies
           command: |
