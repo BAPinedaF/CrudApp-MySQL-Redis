@@ -72,7 +72,7 @@ class CustomerServiceMySQLTests {
     	editCustomer.setName("Jason");
     	editCustomer.setLastname("Todd");
     	editCustomer.setPhone("3333333");
-    	assertEquals("Customer modificado", customerService.updateCustomer(editCustomer));
+    	assertEquals("{ \"status\": \"Customer actualizado\" }", customerService.updateCustomer(editCustomer));
     }
     
     @Test
@@ -102,7 +102,7 @@ class CustomerServiceMySQLTests {
     	editCustomer.setName("Jason");
     	editCustomer.setLastname("Todd");
     	editCustomer.setPhone("3333333");
-    	assertEquals("El cliente con el id " + id + "no existe", customerService.updateCustomer(editCustomer));
+    	assertEquals("{ \"status\": \"El customer con el id "+id+" no existe y no se puede actualizar\" }", customerService.updateCustomer(editCustomer));
     }
 
 }
