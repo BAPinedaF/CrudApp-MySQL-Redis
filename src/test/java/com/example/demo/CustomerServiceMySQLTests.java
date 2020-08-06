@@ -27,7 +27,7 @@ import com.example.demo.service.CustomerServiceMySQL;
 @Sql("/test-mysql.sql")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @CrossOrigin
-class MicroServicioMySqlRedisApplicationTests {
+class CustomerServiceMySQLTests {
 	
 	
 	@Autowired
@@ -76,9 +76,33 @@ class MicroServicioMySqlRedisApplicationTests {
     }
     
     @Test
-    void validateDeleteOfCustomer() {
-    	assertEquals("Eliminado con exito", customerService.deleteCustomer(3L));
+    void validateDeleteCustomer() {
+    	assertEquals("{ \"status\": \"Eliminado con exito\" }", customerService.deleteCustomer(3L));
     }
     
+    @Test
+    void validateErrorSearchCustomer() {
+ 	   Customer customer = new Customer();
+ 	   Optional<Customer> customerFound = Optional.of(customer);
+ 	   customerFound = customerService.findCustomerById(4L);
+ 	   assertEquals(Optional.empty(), customerFound);
+    }
+    
+    @Test
+    void validateErrorDeleteCustomer() {
+    	long id = 4L;
+    	assertEquals("{ \"status\": \"El usuario con el id 4 no existe y no se puede eliminar\" }", customerService.deleteCustomer(id));
+    }
+    
+    @Test
+    void validateErrorEditCustomer() {
+    	Customer editCustomer = new Customer();
+    	long id = 4L;
+    	editCustomer.setId(id);
+    	editCustomer.setName("Jason");
+    	editCustomer.setLastname("Todd");
+    	editCustomer.setPhone("3333333");
+    	assertEquals("El cliente con el id " + id + "no existe", customerService.updateCustomer(editCustomer));
+    }
 
 }

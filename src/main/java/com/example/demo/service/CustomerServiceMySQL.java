@@ -43,38 +43,37 @@ public class CustomerServiceMySQL {
 	}
 
 	public String deleteCustomer(Long id) {
-		customerServiceRedis.deleteRedis();
 		if (customerRepository.findById(id).isPresent()) {
 			customerRepository.deleteById(id);
-			return "Eliminado con exito";
+			return "{ \"status\": \"Eliminado con exito\" }";
 		}
-		return "El usuario con el id " + id  + " no existe y no se puede eliminar";
+		return "{ \"status\": \"El usuario con el id " + id  + " no existe y no se puede eliminar\" }";
 	}
 
 	public String updateCustomer(Customer customerUpdated) {
-		Long num = customerUpdated.getId();
+		Long id = customerUpdated.getId();
 		
-		if (customerRepository.findById(num).isPresent()) {
+		if (customerRepository.findById(id).isPresent()) {
 			Customer customerToUpdate = new Customer();
 			customerToUpdate.setId(customerUpdated.getId());
 			customerToUpdate.setName(customerUpdated.getName());
 			customerToUpdate.setLastname(customerUpdated.getLastname());
 			customerToUpdate.setPhone(customerUpdated.getPhone());
 			customerRepository.save(customerToUpdate);
-			return "Customer modificado";
+			return "{ \"status\": \"Customer actualizado\" }";
 		}
-		return "Error al modificar el Customer";
+		return "{ \"status\": \"El customer con el id " + id  + " no existe y no se puede actualizar\" }";
 	}
 
-	public List<Customer> searchAllCustomers() throws JsonProcessingException {
-		String redisData = customerServiceRedis.findAllRedis().toString();
-		if (redisData.equals("[]")) {
+	public List<Customer> searchAllCustomers() {
+		List<Customer> redisData = customerServiceRedis.findAllRedis();
+		if (redisData.toString().equals("[]")) {
 			System.out.println("-----------------------------------SQL-----------------------------------");
 			customerServiceRedis.refreshRedisData(findAllCustomers());
 			return findAllCustomers();
 		} else {
 			System.out.println("----------------------------------REDIS----------------------------------");
-			return customerServiceRedis.findAllRedis();
+			return redisData;
 		}
 	}
 

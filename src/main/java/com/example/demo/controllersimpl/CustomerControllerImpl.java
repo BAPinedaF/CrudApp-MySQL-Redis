@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.controllers.CustomerController;
 import com.example.demo.entities.Customer;
 import com.example.demo.service.CustomerServiceMySQL;
+import com.example.demo.service.CustomerServiceRedis;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 @SpringBootApplication
@@ -26,6 +27,9 @@ public class CustomerControllerImpl implements CustomerController {
 	
 	@Autowired
 	CustomerServiceMySQL customerService;
+	
+	@Autowired
+	CustomerServiceRedis customerServiceRedis;
 	
 	// http://localhost:8888/customers (GET)
 	@Override
@@ -51,15 +55,15 @@ public class CustomerControllerImpl implements CustomerController {
 	// http://localhost:8888/customers/delete/1 (GET)
 	@GetMapping("/customers/delete/{id}")
 	public String deleteCustomer(@PathVariable Long id) throws JsonProcessingException {
-		String status = customerService.deleteCustomer(id);
-		getAllCustomers();
-		return status;
+		customerServiceRedis.deleteRedis(id);
+		return customerService.deleteCustomer(id);
 	}
 
 	// http://localhost:8888/customers/update (PATCH)
 	@Override
 	@RequestMapping(value = "/customers/update", method = RequestMethod.PATCH, produces = "application/json")
 	public String updateCustomer(@RequestBody Customer customerNew) {
+		customerServiceRedis.updateCustomerRedis(customerNew);
 		return customerService.updateCustomer(customerNew);
 	}
 }
